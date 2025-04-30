@@ -12,7 +12,7 @@ def save_to_excel(filename, data):
     else:
         wb = Workbook()
         ws = wb.active
-        headers = (['City', 'Temp.', 'Temp fells', 'Humidity', 'Wind speed', 'Date'])
+        headers = (list(data.keys()))
         ws.append(headers)
         for col in range(1, len(headers) + 1):
             ws.cell(row=1, column=col).font = wf

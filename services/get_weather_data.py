@@ -15,12 +15,12 @@ def get_weather_data(token: str, city: str):
         data = response.json()
 
         weather = {
-            'name': data['name'],
-            'temp': kelvin_to_celsius(data['main']['temp']),
-            'temp_feels': kelvin_to_celsius(data['main']['feels_like']),
-            'humidity': data['main']['humidity'],
-            'wind_speed': ms_to_kmh(data['wind']['speed']),
-            'date': date_format(data['dt'])
+            'Name': data['name'],
+            'Temp': kelvin_to_celsius(data['main']['temp']),
+            'Temp_Feels': kelvin_to_celsius(data['main']['feels_like']),
+            'Humidity': data['main']['humidity'],
+            'Wind_Speed': ms_to_kmh(data['wind']['speed']),
+            'Fate': date_format(data['dt'])
         }
 
         return weather
