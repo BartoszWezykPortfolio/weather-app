@@ -1,9 +1,7 @@
 import os
 from pprint import pprint
 from dotenv import load_dotenv
-from services.logs import logs_successfull
-from services.logs import logs_failed
-from services.logs import logs_read
+from services.logs import logs_successfull, logs_failed, logs_read
 from services.get_weather_data import get_weather_data
 
 load_dotenv()
