@@ -4,6 +4,7 @@ import requests
 from pprint import pprint
 from utils.temp_converter import kelvin_to_celsius
 from utils.wind_converter import ms_to_kmh
+from utils.date_converter import date_format
 
 def get_weather_data(token: str, city: str):
 
@@ -19,7 +20,7 @@ def get_weather_data(token: str, city: str):
             'temp_feels': kelvin_to_celsius(data['main']['feels_like']),
             'humidity': data['main']['humidity'],
             'wind_speed': ms_to_kmh(data['wind']['speed']),
-            'date': data['dt']
+            'date': date_format(data['dt'])
         }
 
         return weather
