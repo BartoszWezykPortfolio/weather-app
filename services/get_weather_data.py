@@ -9,7 +9,7 @@ import time
 
 def get_weather_data(token: str, city: str):
 
-    timestamp = time.strftime('%H:%M')
+    timestamp = time.strftime('%H:%M:%S')
 
     url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={token}'
 

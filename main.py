@@ -1,27 +1,55 @@
 import os
 import time
-from pprint import pprint
+from itertools import repeat
+
+from pymongo import MongoClient
 from services.logs import logs_successfull, logs_failed, logs_read
 from services.excel_file import save_to_excel
 from services.get_weather_data import get_weather_data
+from services.mongodb import save_to_mongo
 from config import Config
 
+CITY = input('Podaj nazwę miasta\n')
+OPERATION = int(input('Wybierz akcję\n 1. Zapisz do pliku .xlsx\n 2. Zapisz do MongoDB\n 3. Zapisz do xlsx oraz bazy MongoDB'))
+
+def db_data(city):
+    client = MongoClient(Config.DB_URI)
+    db = client['cities_db']
+    collection_name = f"{city.title().replace(' ', '')}WeatherData"
+    collection = db[collection_name]
+
+    return collection
+
 def start():
-    weather = get_weather_data(Config.API_KEY, Config.CITY)
+    weather = get_weather_data(Config.API_KEY, CITY)
     # pprint(list(weather.values()))
     # pprint(list(weather.keys()))
     logs_successfull()
 
-    save_to_excel(Config.EXCEL_FILENAME, weather)
+    coll = db_data(CITY)
 
-while True:
+    match OPERATION:
+        case 1:
+            save_to_excel(Config.EXCEL_FILENAME, weather)
+        case 2:
+            save_to_mongo(coll, weather)
+        case 3:
+            save_to_excel(Config.EXCEL_FILENAME, weather)
+            save_to_mongo(coll, weather)
+        case _:
+            print('Brak wybranej akcji')
+
+repeat = 0
+
+while repeat < 5:
     try:
         start()
         print('Data loaded')
+        repeat += 1
     except Exception as e:
         print(e)
         logs_failed()
 
     logs_read()
-    time.sleep(3600)
+    time.sleep(120)
 
