@@ -18,6 +18,11 @@ OPERATION = int(input(
     '3. Zapisz dane do bazy mysql\n '
     '4. Zapisz do xlsx oraz bazy MongoDB'))
 
+def generate_mysql_table_name(city):
+    return f'{city.title().replace(' ', '')}WeatherData'
+
+mysql_table_name = generate_mysql_table_name(CITY)
+
 def db_data(city):
     client = MongoClient(Config.DB_URI)
     db = client['cities_db']
@@ -40,7 +45,7 @@ def start():
         case 2:
             save_to_mongo(coll, weather)
         case 3:
-            mysql_connect(weather)
+            mysql_connect(weather, mysql_table_name)
         case 4:
             save_to_excel(Config.EXCEL_FILENAME, weather)
             save_to_mongo(coll, weather)

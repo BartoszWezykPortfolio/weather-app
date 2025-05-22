@@ -2,9 +2,9 @@ from config import Config
 import mysql.connector as mysql
 
 
-def create_table(cursor):
-    create_table_query = """
-    CREATE TABLE IF NOT EXISTS weather (
+def create_table(cursor, mysql_table_name):
+    create_table_query = f"""
+    CREATE TABLE IF NOT EXISTS `{mysql_table_name}` (
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(255) NOT NULL,
         temp DECIMAL(5, 2) NOT NULL,
@@ -17,7 +17,7 @@ def create_table(cursor):
     """
     cursor.execute(create_table_query)
 
-def mysql_connect(weather):
+def mysql_connect(weather, mysql_table_name):
     mysql_config = {
         'user':Config.MYSQL_USER,
         'password':Config.MYSQL_PASS,
@@ -28,7 +28,7 @@ def mysql_connect(weather):
     try:
         conn = mysql.connect(**mysql_config)
         cursor = conn.cursor()
-        create_table(cursor)
+        create_table(cursor, mysql_table_name)
 
         insert_sql = """
             INSERT INTO weather (name, temp, temp_feels, humidity, wind_speed, date, time_added) 
