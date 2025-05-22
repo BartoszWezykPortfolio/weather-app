@@ -7,10 +7,16 @@ from services.logs import logs_successfull, logs_failed, logs_read
 from services.excel_file import save_to_excel
 from services.get_weather_data import get_weather_data
 from services.mongodb import save_to_mongo
+from services.mysql_connector import mysql_connect
 from config import Config
 
 CITY = input('Podaj nazwę miasta\n')
-OPERATION = int(input('Wybierz akcję\n 1. Zapisz do pliku .xlsx\n 2. Zapisz do MongoDB\n 3. Zapisz do xlsx oraz bazy MongoDB'))
+OPERATION = int(input(
+    'Wybierz akcję\n '
+    '1. Zapisz do pliku .xlsx\n '
+    '2. Zapisz do MongoDB\n '
+    '3. Zapisz dane do bazy mysql\n '
+    '4. Zapisz do xlsx oraz bazy MongoDB'))
 
 def db_data(city):
     client = MongoClient(Config.DB_URI)
@@ -34,6 +40,8 @@ def start():
         case 2:
             save_to_mongo(coll, weather)
         case 3:
+            mysql_connect(weather)
+        case 4:
             save_to_excel(Config.EXCEL_FILENAME, weather)
             save_to_mongo(coll, weather)
         case _:
