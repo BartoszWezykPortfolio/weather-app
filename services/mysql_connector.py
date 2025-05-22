@@ -12,7 +12,7 @@ def create_table(cursor, mysql_table_name):
         temp_feels FLOAT NOT NULL,
         humidity INT NOT NULL,
         wind_speed FLOAT NOT NULL,
-        date DATE NOT NULL,
+        date VARCHAR(15) NOT NULL,
         time_added TIME NOT NULL
         )
     """

@@ -57,6 +57,8 @@ def start():
         case 5:
             save_to_excel(Config.EXCEL_FILENAME, weather)
             save_to_mongo(coll, weather)
+        case 0:
+            print(weather)
         case _:
             print('Brak wybranej akcji')
 
